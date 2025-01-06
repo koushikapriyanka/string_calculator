@@ -19,5 +19,13 @@ RSpec.describe StringCalculator do
       expected_sum = (1..50).sum
       expect(StringCalculator.add(numbers)).to eq(expected_sum)
     end
+
+    it 'handles newlines between numbers' do
+      expect(StringCalculator.add("1\n2,3")).to eq(6)
+    end
+
+    it 'handles multiple newlines between numbers' do
+      expect(StringCalculator.add("1\n2,3,4\n5\n6")).to eq(21)
+    end
   end
 end
