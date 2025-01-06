@@ -4,7 +4,11 @@ class StringCalculator
 
     delimiter = /,|\n/
     if input.start_with?("//")
-      delimiter, input = input.match(%r{//(.+)\n(.*)}).captures
+      if input.match(%r{//\[(.+)\]\n(.*)}) # Matches multi-character delimiters
+        delimiter, input = input.match(%r{//\[(.+)\]\n(.*)}).captures
+      else
+        delimiter, input = input.match(%r{//(.+)\n(.*)}).captures
+      end
       delimiter = Regexp.escape(delimiter)
     end
 

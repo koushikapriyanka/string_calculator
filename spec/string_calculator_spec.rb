@@ -25,11 +25,6 @@ RSpec.describe StringCalculator do
       expect(StringCalculator.add("1\n2,3,4\n5\n6")).to eq(21)
     end
 
-    it 'supports custom delimiters' do
-      expect(StringCalculator.add("//;\n1;2;3")).to eq(6)
-      expect(StringCalculator.add("//:\n1:2:3:4")).to eq(10)
-    end
-
     it 'raises an exception for negative numbers' do
       expect { StringCalculator.add("1,-2,3,-5") }.to raise_error("Negative numbers not allowed: -2,-5")
       expect { StringCalculator.add("1\n-2,3") }.to raise_error("Negative numbers not allowed: -2")
@@ -47,6 +42,17 @@ RSpec.describe StringCalculator do
 
       it 'includes numbers equal to 1000 in the sum' do
         expect(StringCalculator.add("1000,2")).to eq(1002)
+      end
+    end
+
+    context 'with custom delimiters' do
+      it 'handles single-character custom delimiters' do
+        expect(StringCalculator.add("//;\n1;2;3")).to eq(6)
+        expect(StringCalculator.add("//:\n1:2:3:4")).to eq(10)
+      end
+
+      it 'handles multi-character custom delimiters' do
+        expect(StringCalculator.add("//[***]\n1***2***3")).to eq(6)
       end
     end
   end
